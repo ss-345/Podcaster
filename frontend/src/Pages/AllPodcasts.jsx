@@ -15,7 +15,7 @@ const AllPodcasts = () => {
   }, []);
   return (
     <div>
-      <div className="w-full px-4 lg:px-12 py-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="w-full px-4 lg:px-12 py-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 h-[80vh] overflow-scroll">
         {podcasts &&
           podcasts.map((items, i) => (
             <div key={i}>

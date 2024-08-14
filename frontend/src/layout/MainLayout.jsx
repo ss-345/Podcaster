@@ -1,12 +1,18 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import { Outlet } from "react-router-dom";
+import AudioPlayer from "../components/AudioPlayer/AudioPlayer";
 
 const MainLayout = () => {
   return (
-    <div>
+    <div className="relative">
       <Navbar />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
+      <div>
+        <AudioPlayer />
+      </div>
     </div>
   );
 };

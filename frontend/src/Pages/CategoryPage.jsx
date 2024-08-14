@@ -17,9 +17,10 @@ const CategoryPage = () => {
     fetch();
   }, []);
   return (
-    <div className="px-4 py-4 lg:px-12">
+    <div className="px-4 py-4 lg:px-12 pb-20">
       <h1 className="text-2xl font-semibold ">{cat}</h1>
-      <div className="w-full px-4 lg:px-12 py-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+
+      <div className="w-full py-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {podcasts &&
           podcasts.map((items, i) => (
             <div key={i}>
@@ -27,8 +28,9 @@ const CategoryPage = () => {
             </div>
           ))}
       </div>
+
       {podcasts && podcasts.length === 0 && (
-        <div className="text-4xl font-semibold h-screen flex justify-center">
+        <div className="text-4xl font-semibold flex justify-center items-center py-20">
           No Podcasts Right Now
         </div>
       )}

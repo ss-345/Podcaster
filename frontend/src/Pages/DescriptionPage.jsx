@@ -14,7 +14,7 @@ const DescriptionPage = () => {
         }
       );
       // console.log(res);
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setPodcast(res.data.data);
     };
     fetch();
