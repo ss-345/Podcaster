@@ -7,11 +7,11 @@ const catApi = require("./routes/categories");
 const podcastApi = require("./routes/podcast");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 7000;
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );

@@ -9,14 +9,22 @@ const PodcastCard = ({ items }) => {
   const handleOnPlay = (e) => {
     if (isLoggedIn) {
       e.preventDefault();
+      const imageUrl = `http://localhost:7000/${items.frontImage}`;
+    const audioUrl = `http://localhost:7000/${items.audioFile}`;
       dispatch(playerActions.setDiv());
       dispatch(
-        playerActions.changeImage(`http://localhost:7000/${items.frontImage}`)
+        playerActions.changeImage(imageUrl)
       );
 
       dispatch(
-        playerActions.changeSong(`http://localhost:7000/${items.audioFile}`)
+        playerActions.changeSong(audioUrl)
       );
+      localStorage.setItem("playerData", JSON.stringify({
+        img: imageUrl,
+        songPath: audioUrl,
+        isplayerDiv: true,
+        currentTime:0,
+      }));
     }
   };
   return (

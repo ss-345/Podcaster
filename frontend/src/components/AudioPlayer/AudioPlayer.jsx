@@ -12,7 +12,7 @@ const AudioPlayer = () => {
   const playerImage = useSelector((state) => state.player.img);
   const playerAudio = useSelector((state) => state.player.songPath);
   const audioRef = useRef();
-  const [isPlay, setIsPlay] = useState(false);
+  const [isPlay, setIsPlay] = useState(true);
   const dispatch = useDispatch();
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState();
@@ -22,6 +22,7 @@ const AudioPlayer = () => {
     dispatch(playerActions.closeDiv());
     dispatch(playerActions.changeImage(""));
     dispatch(playerActions.changeSong(""));
+    localStorage.removeItem("playerData");
   };
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -42,7 +43,19 @@ const AudioPlayer = () => {
   };
   const handleTimeUpdate = () => {
     if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
+      const updatedTime = audioRef.current.currentTime;
+      setCurrentTime(updatedTime);
+
+      const savedPlayerData = JSON.parse(
+        localStorage.getItem("playerData") || "{}"
+      );
+      localStorage.setItem(
+        "playerData",
+        JSON.stringify({
+          ...savedPlayerData,
+          currentTime: updatedTime,
+        })
+      );
     }
   };
   const handleLoadedMetaData = () => {
@@ -55,6 +68,16 @@ const AudioPlayer = () => {
       let newTime = Math.max(currentTime - 10, 0);
       audioRef.current.currentTime = newTime;
       setCurrentTime(newTime);
+      const savedPlayerData = JSON.parse(
+        localStorage.getItem("playerData") || "{}"
+      );
+      localStorage.setItem(
+        "playerData",
+        JSON.stringify({
+          ...savedPlayerData,
+          currentTime: newTime,
+        })
+      );
     }
   };
   const handleForward = () => {
@@ -62,6 +85,16 @@ const AudioPlayer = () => {
       let newTime = Math.min(currentTime + 10, duration);
       audioRef.current.currentTime = newTime;
       setCurrentTime(newTime);
+      const savedPlayerData = JSON.parse(
+        localStorage.getItem("playerData") || "{}"
+      );
+      localStorage.setItem(
+        "playerData",
+        JSON.stringify({
+          ...savedPlayerData,
+          currentTime: newTime,
+        })
+      );
     }
   };
   const handleSeekBar = (e) => {
@@ -70,6 +103,16 @@ const AudioPlayer = () => {
       let newTime = (e.target.value / 100) * duration;
       audioRef.current.currentTime = newTime;
       setCurrentTime(newTime);
+      const savedPlayerData = JSON.parse(
+        localStorage.getItem("playerData") || "{}"
+      );
+      localStorage.setItem(
+        "playerData",
+        JSON.stringify({
+          ...savedPlayerData,
+          currentTime: newTime,
+        })
+      );
     }
   };
   useEffect(() => {
@@ -80,7 +123,33 @@ const AudioPlayer = () => {
       currentAudio.addEventListener("loadedmetadata", handleLoadedMetaData);
     }
   }, [playerAudio]);
-  
+
+  useEffect(() => {
+    // handleOnClickPlayPause();
+    const savedPlayerData = localStorage.getItem("playerData");
+    if (savedPlayerData) {
+      const {
+        img,
+        songPath,
+        isplayerDiv,
+        currentTime: savedTime,
+      } = JSON.parse(savedPlayerData);
+      if (img && songPath && isplayerDiv) {
+        dispatch(playerActions.changeImage(img));
+        dispatch(playerActions.changeSong(songPath));
+        dispatch(playerActions.setDiv());
+        // setIsPlay(true);
+
+        const setTime = () => {
+          if (audioRef.current && savedTime) {
+            audioRef.current.currentTime = savedTime;
+            setCurrentTime(savedTime);
+          }
+        };
+        audioRef.current?.addEventListener("loadedmetadata", setTime);
+      }
+    }
+  }, []);
   return (
     <div
       className={`${

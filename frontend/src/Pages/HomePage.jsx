@@ -28,11 +28,11 @@ const HomePage = () => {
           </h1>
         </div>
 
-        <div className="hidden lg:block w-1/6">
+        {/* <div className="hidden lg:block w-1/6">
           <div className="py-4 border border-black rounded-full text-center font-semibold -rotate-90 bg-white">
             Scroll Down
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="mt-12 w-full flex items-end justify-between">
         <div className="flex flex-col items-center lg:items-start justify-center">

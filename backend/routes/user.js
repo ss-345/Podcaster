@@ -74,10 +74,11 @@ router.post("/sign-in", async (req, res) => {
     res.cookie("podcasterUserToken", token, {
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "None",
+      secure: process.env.NODE_ENV === "production" ? true : false, // Adjust based on env
+      sameSite: "None", // Allows cross-origin cookies
       path: "/",
     });
+    
     res.status(200).send({
       id: existingUser._id,
       username: existingUser.username,
