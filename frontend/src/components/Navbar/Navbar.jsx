@@ -5,6 +5,7 @@ import { RxCross1 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  let [page,setPage]=useState('Home');
   // console.log(isLoggedIn);
   const [MobileNav, setMobileNav] = useState(false);
   const navLinks = [
@@ -40,6 +41,8 @@ const Navbar = () => {
               className="ms-4 hover:font-semibold transition-all duration-300"
               to={item.path}
               key={i}
+              onClick={()=>setPage(item.name)}
+              style={page===item.name ? {fontWeight:'bold',textDecoration: 'underline'} : {}}
             >
               {item.name}
             </Link>

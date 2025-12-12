@@ -40,12 +40,12 @@ const LogIn = () => {
     // Simulate loading when checking login status
     setTimeout(() => {
       setLoading(false); // Set loading to false after checking login status
-    }, 2000); // Example delay of 2 seconds
+    }, 2000);
   }, []);
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Loader/>
+        <Loader />
       </div>
     );
   }
